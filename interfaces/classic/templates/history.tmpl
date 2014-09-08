@@ -1,4 +1,4 @@
-#set global $statpath="../.."
+#set global $statpath=".."
 #set global $topmenu="history"
 #set global $submenu=""
 
@@ -273,13 +273,13 @@
 						<p>
 							<input type="checkbox" style="display:none;" name="history_purge_id" value="$line.id" form="history_purge_checkbox" id="$history_purge_checkbox_id">
 							<input type="checkbox" class="history_checkbox_nomargin" name="history_release_id" value="$line.id" form="history_release_checkbox" id="$history_release_checkbox_id" onclick="checkbox_checked('$history_release_checkbox_id','$history_purge_checkbox_id')" />
-							<a title="imdb" href="$line.imdblink" class="history_post_details_colour"><img alt="" class="logo_icon_position" src="/images/icon/imdb.gif"></a>
-							<input type="image" title="download" class="logo_icon_position" src="/images/icon/$dltype" alt="download" name="" form="$history_release_button_id">
+							<a title="imdb" href="$line.imdblink" class="history_post_details_colour"><img alt="" class="logo_icon_position" src="../images/icon/imdb.gif"></a>
+							<input type="image" title="download" class="logo_icon_position" src="../images/icon/$dltype" alt="download" name="" form="$history_release_button_id">
 							<!--#note - input type image cannot have value, thus using hidden input#-->
 							<input type="hidden" name="history_release_id" value="$line.id" form="$history_release_button_id">
-							<a title="details" href="$line.postdetails" class="history_post_details_colour"><img alt="" class="logo_icon_position" src="/images/icon/post.gif"></a>
-							<a title="nfo" href="$line.postnfo" class="history_post_details_colour"><img alt="" class="logo_icon_position" src="/images/icon/nfo.gif"></a>
-							<input type="image" title="purge" class="logo_icon_position" src="/images/icon/purge.gif" alt="purge" name="" form="$history_purge_button_id">
+							<a title="details" href="$line.postdetails" class="history_post_details_colour"><img alt="" class="logo_icon_position" src="../images/icon/post.gif"></a>
+							<a title="nfo" href="$line.postnfo" class="history_post_details_colour"><img alt="" class="logo_icon_position" src="../images/icon/nfo.gif"></a>
+							<input type="image" title="purge" class="logo_icon_position" src="../images/icon/purge.gif" alt="purge" name="" form="$history_purge_button_id">
 							<!--#note - input type image cannot have value, thus using hidden input#-->
 							<input type="hidden" name="history_purge_id" value="$line.id" form="$history_purge_button_id">
 							
@@ -295,9 +295,9 @@
 						<!--#set global $imdbposter=urllib.quote($line.imdbposter)#-->
 						
 						<!--#if $line.imdbposter == "default.jpg"#-->
-							<a href="$line.imdblink" class="history_post_details_colour"><img alt="" src="/images/posters/thumbnails/default/$imdbposter" height="170" width="115" class="history_poster_image"><br></a><br>
+							<a href="$line.imdblink" class="history_post_details_colour"><img alt="" src="../images/posters/thumbnails/default/$imdbposter" height="170" width="115" class="history_poster_image"><br></a><br>
 						<!--#else#-->
-							<a href="$line.imdblink" class="history_post_details_colour"><img alt="" src="/images/posters/thumbnails/history/$imdbposter" height="170" width="115" class="history_poster_image"><br></a><br>
+							<a href="$line.imdblink" class="history_post_details_colour"><img alt="" src="../images/posters/thumbnails/history/$imdbposter" height="170" width="115" class="history_poster_image"><br></a><br>
 						<!--#end if#-->
 
 					</div>
