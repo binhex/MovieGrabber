@@ -204,6 +204,7 @@ def config_write(config_ini,webconfig_address,webconfig_port,logs_dir,results_di
         config_write_option("webconfig","username","")
         config_write_option("webconfig","password","")
         config_write_option("webconfig","enable_ssl","no")
+        config_write_option("webconfig","http_root","")
 
         config_write_option("general","post_schedule_hour","1")
         config_write_option("general","post_schedule_minute","0")
@@ -2634,6 +2635,7 @@ class SearchIndex(object):
                         config_webconfig_address = config_parser.get("webconfig", "address")
                         config_webconfig_port = config_parser.get("webconfig", "port")
                         config_webconfig_enable_ssl = config_parser.get("webconfig", "enable_ssl")
+                        config_webconfig_http_root =  config_parser.get("webconfig", "http_root")
 
                         #create message container
                         msg = email.mime.multipart.MIMEMultipart('alternative')
@@ -2684,8 +2686,8 @@ class SearchIndex(object):
                                         webconfig_protocol = "http://"
 
                                 #create url's for local and remote
-                                queue_release_external = webconfig_protocol + self.external_ip_address + ":" + config_webconfig_port + "/queue/queue_release?queue_release_id=" + str(self.sqlite_id_queued)
-                                queue_release_internal = webconfig_protocol + config_webconfig_address + ":" + config_webconfig_port + "/queue/queue_release?queue_release_id=" + str(self.sqlite_id_queued)
+                                queue_release_external = webconfig_protocol + self.external_ip_address + ":" + config_webconfig_port + config_webconfig_http_root + "/queue/queue_release?queue_release_id=" + str(self.sqlite_id_queued)
+                                queue_release_internal = webconfig_protocol + config_webconfig_address + ":" + config_webconfig_port + config_webconfig_http_root + "/queue/queue_release?queue_release_id=" + str(self.sqlite_id_queued)
 
                                 html = html + """
                                 <p>
@@ -4456,6 +4458,7 @@ class ConfigGeneral(object):
                 template.username = config_parser.get("webconfig", "username")
                 template.password = config_parser.get("webconfig", "password")
                 template.enable_ssl = config_parser.get("webconfig", "enable_ssl")
+                template.http_root = config_parser.get("webconfig", "http_root")
                 template.log_level = config_parser.get("general", "log_level")
                 template.log_level_list = ["INFO", "WARNING", "exception"]
                 template.check_version = config_parser.get("general", "check_version")
@@ -4503,6 +4506,7 @@ class ConfigGeneral(object):
                 config_parser.set("webconfig", "username", kwargs["username2"])
                 config_parser.set("webconfig", "password", kwargs["password2"])
                 config_parser.set("webconfig", "enable_ssl", kwargs["enable_ssl2"])
+                config_parser.set("webconfig", "http_root",  kwargs["http_root2"])
                 config_parser.set("general", "index_preferred_group", kwargs["index_preferred_group2"])
                 config_parser.set("general", "index_special_cut", kwargs["index_special_cut2"])                
                 config_parser.set("general", "index_bad_group", kwargs["index_bad_group2"])
@@ -4544,6 +4548,10 @@ class ConfigGeneral(object):
                 if kwargs["port2"]:
 
                         config_parser.set("webconfig", "port", kwargs["port2"])
+
+                if kwargs["http_root2"]:
+
+                        config_parser.set("webconfig", "http_root",  kwargs["http_root2"])
 
                 if kwargs["index_posts_to_process2"]:
 
@@ -6258,7 +6266,7 @@ def start_webgui():
                 os._exit(1)
 
         #quickstart cherrypy using python defined cherrypy config
-        cherrypy.quickstart(HomeRoot(), config=webconfig_settings)
+        cherrypy.quickstart(HomeRoot(), config_parser.get("webconfig", "http_root"), config=webconfig_settings)
 
 #download thread class
 class DownloadThread(object):
@@ -6654,6 +6662,7 @@ def launch_default_browser():
         config_webconfig_address = config_parser.get("webconfig", "address")
         config_webconfig_port = config_parser.get("webconfig", "port")
         config_webconfig_enable_ssl = config_parser.get("webconfig", "enable_ssl")
+        config_http_root = config_parser.get("webconfig", "http_root")
 
         #check if ssl is enabled
         if config_webconfig_enable_ssl == "yes":
@@ -6674,7 +6683,7 @@ def launch_default_browser():
         try:
 
                 #open client browser
-                webbrowser.open(website_protocol + config_webconfig_address + ":" + config_webconfig_port, 2, 1)
+                webbrowser.open(website_protocol + config_webconfig_address + ":" + config_webconfig_port + config_http_root, 2, 1)
 
         except Exception:
 
